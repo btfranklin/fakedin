@@ -65,31 +65,6 @@ class LLMClient:
             response = self.client.chat.completions.create(
                 model=self.model,
                 messages=messages,  # type: ignore
-                temperature=0.7,
-            )
-
-            # Extract the generated text from the response
-            return response.choices[0].message.content or ""
-        except Exception as e:
-            raise RuntimeError(f"Error generating text: {str(e)}") from e
-
-    def generate(self, prompt: str) -> str:
-        """Generate text using the OpenAI API with a simple prompt.
-
-        Args:
-            prompt: The prompt to send to the API.
-
-        Returns:
-            Generated text.
-        """
-        try:
-            response = self.client.chat.completions.create(
-                model=self.model,
-                messages=[
-                    {"role": "system", "content": "You are a helpful assistant."},
-                    {"role": "user", "content": prompt},
-                ],
-                temperature=0.7,
             )
 
             # Extract the generated text from the response

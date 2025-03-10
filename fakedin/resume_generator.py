@@ -4,9 +4,9 @@ import os
 from pathlib import Path
 from typing import Any, Literal, Optional
 
-from fpdf import FPDF  # Package name is fpdf2, but module name is fpdf
+from fpdf import FPDF  # type: ignore # Package name is fpdf2, but module name is fpdf
 
-from fakedin.data_generator import PersonGenerator
+from fakedin.person_generator import PersonGenerator
 from fakedin.llm_client import LLMClient
 
 
@@ -72,7 +72,7 @@ class ResumeGenerator:
         Returns:
             List of paths to the generated files.
         """
-        generated_files = []
+        generated_files: list[Path] = []
 
         for i in range(count):
             try:

@@ -2,9 +2,8 @@
 
 import os
 from pathlib import Path
-from typing import Optional
 
-from fakedin.data_generator import JobGenerator
+from fakedin.job_data_generator import JobGenerator
 from fakedin.llm_client import LLMClient
 
 
@@ -16,7 +15,7 @@ class JobOpeningGenerator:
         self.job_generator = JobGenerator()
         self.llm_client = LLMClient()
 
-    def generate(self, output_dir: Optional[Path] = None) -> Path:
+    def generate(self, output_dir: Path | None = None) -> Path:
         """Generate a single job opening.
 
         Args:
@@ -46,7 +45,7 @@ class JobOpeningGenerator:
         return output_path
 
     def generate_multiple(
-        self, count: int, output_dir: Optional[Path] = None
+        self, count: int, output_dir: Path | None = None
     ) -> list[Path]:
         """Generate multiple job openings.
 
@@ -57,7 +56,7 @@ class JobOpeningGenerator:
         Returns:
             List of paths to the generated files.
         """
-        generated_files = []
+        generated_files: list[Path] = []
 
         for i in range(count):
             try:
