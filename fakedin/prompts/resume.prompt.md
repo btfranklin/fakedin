@@ -32,6 +32,6 @@ Please create a detailed, realistic resume that includes:
 
 Make sure the resume is realistic with specific, concrete details that demonstrate actual accomplishments and skills. Avoid generic job descriptions. Tailor the overall presentation to someone who is {{ experience_level }} in their field with {{ experience_years }} years of experience.
 
-Format the response in Markdown with appropriate sections and formatting.
+Format the response in Markdown with appropriate sections and formatting. Do not surround it with triple-ticks (```), just raw Markdown.
 
 Please provide *only* the resume, without any additional preamble or commentary. Your response will be saved directly to a file.
