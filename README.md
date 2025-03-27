@@ -30,6 +30,13 @@ FakedIn is a set of Python utilities for generating realistic (but fake) résum�
    echo "OPENAI_API_KEY=your_api_key_here" > .env
    ```
 
+4. Optionally, specify which OpenAI model to use:
+
+   ```bash
+   # In your .env file
+   OPENAI_MODEL=gpt-4o-mini  # Defaults to gpt-4o if not specified
+   ```
+
 ## Usage
 
 FakedIn provides simple Python scripts for generating résumés and job openings.
