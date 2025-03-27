@@ -1,4 +1,4 @@
-# Generate a Realistic résumé
+# Generate a Realistic Résumé
 
 ## Developer Message
 
