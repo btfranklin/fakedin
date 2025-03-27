@@ -93,7 +93,7 @@ files = [
 
 [[package]]
 name = "faker"
-version = "37.0.0"
+version = "37.1.0"
 requires_python = ">=3.9"
 summary = "Faker is a Python package that generates fake data for you."
 groups = ["default"]
@@ -102,8 +102,8 @@ dependencies = [
     "tzdata",
 ]
 files = [
-    {file = "faker-37.0.0-py3-none-any.whl", hash = "sha256:2598f78b76710a4ed05e197dda5235be409b4c291ba5c9c7514989cfbc7a5144"},
-    {file = "faker-37.0.0.tar.gz", hash = "sha256:d2e4e2a30d459a8ec0ae52a552aa51c48973cb32cf51107dee90f58a8322a880"},
+    {file = "faker-37.1.0-py3-none-any.whl", hash = "sha256:dc2f730be71cb770e9c715b13374d80dbcee879675121ab51f9683d262ae9a1c"},
+    {file = "faker-37.1.0.tar.gz", hash = "sha256:ad9dc66a3b84888b837ca729e85299a96b58fdaef0323ed0baace93c9614af06"},
 ]
 
 [[package]]
@@ -293,7 +293,7 @@ files = [
 
 [[package]]
 name = "openai"
-version = "1.65.5"
+version = "1.68.2"
 requires_python = ">=3.8"
 summary = "The official Python library for the openai API"
 groups = ["default"]
@@ -309,8 +309,8 @@ dependencies = [
     "typing-extensions<5,>=4.11",
 ]
 files = [
-    {file = "openai-1.65.5-py3-none-any.whl", hash = "sha256:5948a504e7b4003d921cfab81273813793a31c25b1d7b605797c01757e0141f1"},
-    {file = "openai-1.65.5.tar.gz", hash = "sha256:17d39096bbcaf6c86580244b493a59e16613460147f0ba5ab6e608cdb6628149"},
+    {file = "openai-1.68.2-py3-none-any.whl", hash = "sha256:24484cb5c9a33b58576fdc5acf0e5f92603024a4e39d0b99793dfa1eb14c2b36"},
+    {file = "openai-1.68.2.tar.gz", hash = "sha256:b720f0a95a1dbe1429c0d9bb62096a0d98057bcda82516f6e8af10284bdd5b19"},
 ]
 
 [[package]]
@@ -402,14 +402,14 @@ files = [
 
 [[package]]
 name = "python-dotenv"
-version = "1.0.1"
-requires_python = ">=3.8"
+version = "1.1.0"
+requires_python = ">=3.9"
 summary = "Read key-value pairs from a .env file and set them as environment variables"
 groups = ["default"]
 marker = "python_version >= \"3.13\""
 files = [
-    {file = "python-dotenv-1.0.1.tar.gz", hash = "sha256:e324ee90a023d808f1959c46bcbc04446a10ced277783dc6ee09987c37ec10ca"},
-    {file = "python_dotenv-1.0.1-py3-none-any.whl", hash = "sha256:f7b63ef50f1b690dddf550d03497b66d609393b40b564ed0d674909a68ebf16a"},
+    {file = "python_dotenv-1.1.0-py3-none-any.whl", hash = "sha256:d7c01d9e2293916c18baf562d95698754b0dbbb5e74d457c45d4f6561fb9d55d"},
+    {file = "python_dotenv-1.1.0.tar.gz", hash = "sha256:41f90bc6f5f177fb41f53e87666db362025010eb28f60a01c9143bfa33a2b2d5"},
 ]
 
 [[package]]
