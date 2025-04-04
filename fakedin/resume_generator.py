@@ -51,17 +51,17 @@ class ResumeGenerator:
         if output_format == "pdf":
             output_path = output_dir / f"{sanitized_name}_resume.pdf"
             try:
-                self._save_as_pdf(resume_text, output_path, person)
+                self.save_as_pdf(resume_text, output_path, person)
             except Exception as e:
                 print(f"Error creating PDF: {str(e)}")
                 # Fallback to markdown
                 markdown_path = output_dir / f"{sanitized_name}_resume.md"
-                self._save_as_markdown(resume_text, markdown_path)
+                self.save_as_markdown(resume_text, markdown_path)
                 print(f"Saved as markdown file instead: {markdown_path}")
                 raise
         else:  # markdown
             output_path = output_dir / f"{sanitized_name}_resume.md"
-            self._save_as_markdown(resume_text, output_path)
+            self.save_as_markdown(resume_text, output_path)
 
         return output_path
 
@@ -93,12 +93,15 @@ class ResumeGenerator:
 
         return generated_files
 
-    def _save_as_markdown(self, content: str, output_path: Path) -> None:
+    def save_as_markdown(self, content: str, output_path: Path) -> None:
         """Save the resume as a Markdown file."""
+        # Ensure the parent directory exists
+        os.makedirs(output_path.parent, exist_ok=True)
+
         with open(output_path, "w", encoding="utf-8") as f:
             f.write(content)
 
-    def _save_as_pdf(
+    def save_as_pdf(
         self, content: str, output_path: Path, person: dict[str, Any]
     ) -> None:
         """Save the resume as a PDF file with basic Markdown formatting support.
@@ -109,6 +112,9 @@ class ResumeGenerator:
         - Headings (# H1, ## H2, ### H3)
         - List items (-, *)
         """
+        # Ensure the parent directory exists
+        os.makedirs(output_path.parent, exist_ok=True)
+
         # Create PDF
         pdf = FPDF()
         pdf.add_page()
@@ -117,7 +123,7 @@ class ResumeGenerator:
         pdf.set_font("Helvetica", size=12)
 
         # Preprocess the content to replace problematic Unicode characters
-        content = self._sanitize_for_pdf(content)
+        content = self.sanitize_for_pdf(content)
 
         # Process the content by paragraphs for better formatting
         paragraphs = content.split("\n\n")
@@ -126,15 +132,15 @@ class ResumeGenerator:
             # Handle headings with larger font size
             if paragraph.startswith("# "):
                 pdf.set_font("Helvetica", style="B", size=18)
-                pdf.multi_cell(0, 10, paragraph[2:])
+                pdf.multi_cell(0, 10, paragraph[2:])  # type: ignore
                 pdf.set_font("Helvetica", size=12)
             elif paragraph.startswith("## "):
                 pdf.set_font("Helvetica", style="B", size=14)
-                pdf.multi_cell(0, 10, paragraph[3:])
+                pdf.multi_cell(0, 10, paragraph[3:])  # type: ignore
                 pdf.set_font("Helvetica", size=12)
             elif paragraph.startswith("### "):
                 pdf.set_font("Helvetica", style="B", size=12)
-                pdf.multi_cell(0, 10, paragraph[4:])
+                pdf.multi_cell(0, 10, paragraph[4:])  # type: ignore
                 pdf.set_font("Helvetica", size=12)
             # Handle lists
             elif paragraph.startswith("- ") or paragraph.startswith("* "):
@@ -144,15 +150,15 @@ class ResumeGenerator:
                         # Use standard hyphen instead of bullet character
                         text = line[2:]
                         # Apply custom markdown parsing
-                        text = self._parse_inline_formatting(text)
-                        pdf.multi_cell(0, 10, f"- {text}")
+                        text = self.parse_inline_formatting(text)
+                        pdf.multi_cell(0, 10, f"- {text}")  # type: ignore
                     else:
-                        text = self._parse_inline_formatting(line)
-                        pdf.multi_cell(0, 10, text)
+                        text = self.parse_inline_formatting(line)
+                        pdf.multi_cell(0, 10, text)  # type: ignore
             else:
                 # Parse inline formatting for normal paragraphs
-                text = self._parse_inline_formatting(paragraph)
-                pdf.multi_cell(0, 10, text)
+                text = self.parse_inline_formatting(paragraph)
+                pdf.multi_cell(0, 10, text)  # type: ignore
 
             # Add some spacing between paragraphs
             pdf.ln(5)
@@ -160,7 +166,7 @@ class ResumeGenerator:
         # Save the PDF
         pdf.output(str(output_path))
 
-    def _parse_inline_formatting(self, text: str) -> str:
+    def parse_inline_formatting(self, text: str) -> str:
         """Parse inline Markdown formatting and apply FPDF styling.
 
         This method handles:
@@ -180,19 +186,19 @@ class ResumeGenerator:
 
         for match in re.finditer(bold_pattern, text):
             # Add the text before the match
-            chunks.append(text[last_end : match.start()])
+            chunks.append(text[last_end : match.start()])  # type: ignore
 
             # Add the bold text without the markers
             bold_text = match.group(2)
-            chunks.append(bold_text)
+            chunks.append(bold_text)  # type: ignore
 
             last_end = match.end()
 
         # Add the remaining text
-        chunks.append(text[last_end:])
+        chunks.append(text[last_end:])  # type: ignore
 
         # Join all parts
-        result = "".join(chunks)
+        result = "".join(chunks)  # type: ignore
 
         # Next, handle italic formatting
         # Find all occurrences of *text* or _text_
@@ -203,23 +209,23 @@ class ResumeGenerator:
 
         for match in re.finditer(italic_pattern, result):
             # Add the text before the match
-            chunks.append(result[last_end : match.start()])
+            chunks.append(result[last_end : match.start()])  # type: ignore
 
             # Add the italic text without the markers
             italic_text = match.group(2)
-            chunks.append(italic_text)
+            chunks.append(italic_text)  # type: ignore
 
             last_end = match.end()
 
         # Add the remaining text
-        chunks.append(result[last_end:])
+        chunks.append(result[last_end:])  # type: ignore
 
         # Join all parts
-        result = "".join(chunks)
+        result = "".join(chunks)  # type: ignore
 
         return result
 
-    def _sanitize_for_pdf(self, text: str) -> str:
+    def sanitize_for_pdf(self, text: str) -> str:
         """Sanitize text for PDF output by replacing unsupported Unicode characters."""
         # Common problematic characters and their replacements
         replacements = {
