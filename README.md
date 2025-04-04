@@ -64,6 +64,24 @@ pdm run python generate_job.py 5
 pdm run python generate_job.py 3 --output ./job_listings
 ```
 
+### Generating Résumés Tailored to Jobs
+
+You can also generate résumés that are specifically tailored to match a particular job description:
+
+```bash
+# First generate a job description
+pdm run python generate_job.py 1 --output ./jobs
+
+# Then generate 5 résumés tailored to that job in markdown format
+pdm run python generate_resumes_for_job.py jobs/company_name_career_field_job.md 5
+
+# Generate 3 résumés tailored to the job in PDF format
+pdm run python generate_resumes_for_job.py jobs/company_name_career_field_job.md 3 --format pdf
+
+# Specify an output directory
+pdm run python generate_resumes_for_job.py jobs/company_name_career_field_job.md 2 --output ./applicants --format pdf
+```
+
 ## Features
 
 - **Résumé Generation**:
@@ -75,6 +93,11 @@ pdm run python generate_job.py 3 --output ./job_listings
   - Randomly generates job details using Faker (career fields, company names)
   - Creates comprehensive job descriptions with responsibilities and requirements
   - Includes realistic salary ranges and work models (remote/hybrid/on-site)
+
+- **Tailored Résumé Generation**:
+  - Generates résumés specifically customized to match job requirements
+  - Highlights skills and experience relevant to the job
+  - Creates realistic career trajectories that would qualify candidates for the position
 
 ## Customization
 
@@ -94,9 +117,16 @@ FakedIn uses the [promptdown](https://github.com/btfranklin/promptdown) library 
 
 - `resume.prompt.md`: Template for résumé generation
 - `job_opening.prompt.md`: Template for job opening generation
+- `resume_for_job.prompt.md`: Template for generating résumés tailored to specific job descriptions
 
 You can modify these templates to customize the output. The templates follow the promptdown format with a title, System Message, and Conversation sections formatted in markdown. We use the simplified conversation format (with bold text like `**User:**` to indicate roles) for better readability with our long prompts.
 
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Technical Features
+
+- All scripts automatically create output directories if they don't exist
+- Graceful error handling for all generation and file operations
+- Defaults to Markdown format with PDF generation as an option
