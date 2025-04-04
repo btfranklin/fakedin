@@ -40,7 +40,12 @@ def main():
     args = parser.parse_args()
 
     # Create output directory if it doesn't exist
-    os.makedirs(args.output, exist_ok=True)
+    try:
+        os.makedirs(args.output, exist_ok=True)
+        print(f"Output directory ready: {args.output}")
+    except Exception as e:
+        print(f"Error creating output directory: {str(e)}", file=sys.stderr)
+        sys.exit(1)
 
     # Initialize generator and generate job descriptions
     try:
