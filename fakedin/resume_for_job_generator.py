@@ -42,7 +42,8 @@ class ResumeForJobGenerator:
         person = self.person_generator.generate_person()
 
         # Create parameters for the prompt
-        params = {**person, "job_description": job_description}
+        job_description_markdown_block = f"```markdown\n{job_description}\n```"
+        params = {**person, "job_description": job_description_markdown_block}
 
         # Generate resume content using LLM
         resume_text = self.llm_client.generate_from_promptdown("resume_for_job", params)

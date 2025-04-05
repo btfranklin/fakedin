@@ -9,9 +9,7 @@ You are a professional résumé writer tasked with creating a realistic, detaile
 **User:**
 I need you to generate a realistic, tailored résumé for a fictional person who would be a suitable candidate for the following job description:
 
-```markdown
 {job_description}
-```
 
 The applicant has the following basic information:
 
