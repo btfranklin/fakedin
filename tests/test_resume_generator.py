@@ -5,7 +5,9 @@ from fakedin.resume_generator import ResumeGenerator
 
 def test_parse_inline_formatting_strips_markers() -> None:
     generator = ResumeGenerator()
-    text = "This is **bold** and _italic_ and *italic2* and __bold2__."
+    text = (
+        "This is **bold** and _italic_ and *italic2* and __bold2__."
+    )
     parsed = generator.parse_inline_formatting(text)
 
     assert "**" not in parsed
@@ -17,7 +19,10 @@ def test_parse_inline_formatting_strips_markers() -> None:
 
 def test_sanitize_for_pdf_replaces_unicode() -> None:
     generator = ResumeGenerator()
-    raw = "Dash \u2013 dash \u2014 quote \u201cHi\u201d bullet \u2022 ellipsis \u2026"
+    raw = (
+        "Dash \u2013 dash \u2014 quote \u201cHi\u201d "
+        "bullet \u2022 ellipsis \u2026"
+    )
     sanitized = generator.sanitize_for_pdf(raw)
 
     assert "\u2013" not in sanitized
@@ -57,7 +62,10 @@ def test_generate_pdf_falls_back_to_markdown(tmp_path: Path) -> None:
         "experience_level": "Mid-Level",
     }
 
-    generator.llm_client.generate_from_promptdown = lambda *_args, **_kwargs: "resume"
+    def _fake_generate(*_args, **_kwargs) -> str:
+        return "resume"
+
+    generator.llm_client.generate_from_promptdown = _fake_generate
 
     def _raise_pdf(_content: str, _output_path: Path, _person: dict) -> None:
         raise RuntimeError("pdf failed")

@@ -19,7 +19,8 @@ class JobOpeningGenerator:
         """Generate a single job opening.
 
         Args:
-            output_dir: Directory to save the job opening in. Defaults to current directory.
+            output_dir: Directory to save the job opening in. Defaults to the
+                current directory.
 
         Returns:
             Path to the generated file.
@@ -28,7 +29,10 @@ class JobOpeningGenerator:
         job = self.job_generator.generate_job()
 
         # Generate job opening content using LLM
-        job_text = self.llm_client.generate_from_promptdown("job_opening", job)
+        job_text = self.llm_client.generate_from_promptdown(
+            "job_opening",
+            job,
+        )
 
         # Create output directory if it doesn't exist
         if output_dir is None:
@@ -36,8 +40,12 @@ class JobOpeningGenerator:
         os.makedirs(output_dir, exist_ok=True)
 
         # Create sanitized filename
-        sanitized_name = job["company_name"].lower().replace(" ", "_").replace(".", "")
-        sanitized_field = job["career_field"].lower().replace(" ", "_").replace(".", "")
+        sanitized_name = (
+            job["company_name"].lower().replace(" ", "_").replace(".", "")
+        )
+        sanitized_field = (
+            job["career_field"].lower().replace(" ", "_").replace(".", "")
+        )
 
         output_path = output_dir / f"{sanitized_name}_{sanitized_field}_job.md"
         self._save_as_markdown(job_text, output_path)
@@ -51,7 +59,8 @@ class JobOpeningGenerator:
 
         Args:
             count: Number of job openings to generate.
-            output_dir: Directory to save the job openings in. Defaults to current directory.
+            output_dir: Directory to save the job openings in. Defaults to the
+                current directory.
 
         Returns:
             List of paths to the generated files.
@@ -61,7 +70,7 @@ class JobOpeningGenerator:
         for i in range(count):
             file_path = self.generate(output_dir)
             generated_files.append(file_path)
-            print(f"Generated job opening {i+1}/{count}: {file_path}")
+            print(f"Generated job opening {i + 1}/{count}: {file_path}")
 
         return generated_files
 

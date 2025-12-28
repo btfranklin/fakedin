@@ -28,8 +28,10 @@ class ResumeForJobGenerator:
 
         Args:
             job_description_path: Path to the job description file.
-            output_format: Format to output the resume in ('pdf' or 'markdown').
-            output_dir: Directory to save the resume in. Defaults to current directory.
+            output_format: Format to output the resume in ('pdf' or 'markdown')
+                format.
+            output_dir: Directory to save the resume in. Defaults to the
+                current directory.
 
         Returns:
             Path to the generated file.
@@ -46,7 +48,10 @@ class ResumeForJobGenerator:
         params = {**person, "job_description": job_description_markdown_block}
 
         # Generate resume content using LLM
-        resume_text = self.llm_client.generate_from_promptdown("resume_for_job", params)
+        resume_text = self.llm_client.generate_from_promptdown(
+            "resume_for_job",
+            params,
+        )
 
         # Create output directory if it doesn't exist
         if output_dir is None:
@@ -61,24 +66,34 @@ class ResumeForJobGenerator:
 
         # Save the resume in the requested format
         if output_format == "pdf":
-            output_path = (
-                output_dir / f"{sanitized_name}_for_{job_description_filename}.pdf"
+            output_filename = (
+                f"{sanitized_name}_for_{job_description_filename}.pdf"
             )
+            output_path = output_dir / output_filename
             try:
-                self.resume_generator.save_as_pdf(resume_text, output_path, person)
-            except Exception as e:
-                print(f"Error creating PDF: {str(e)}")
-                # Fallback to markdown
-                markdown_path = (
-                    output_dir / f"{sanitized_name}_for_{job_description_filename}.md"
+                self.resume_generator.save_as_pdf(
+                    resume_text,
+                    output_path,
+                    person,
                 )
-                self.resume_generator.save_as_markdown(resume_text, markdown_path)
+            except Exception as exc:
+                print(f"Error creating PDF: {exc}")
+                # Fallback to markdown
+                markdown_filename = (
+                    f"{sanitized_name}_for_{job_description_filename}.md"
+                )
+                markdown_path = output_dir / markdown_filename
+                self.resume_generator.save_as_markdown(
+                    resume_text,
+                    markdown_path,
+                )
                 print(f"Saved as markdown file instead: {markdown_path}")
                 output_path = markdown_path
         else:  # markdown
-            output_path = (
-                output_dir / f"{sanitized_name}_for_{job_description_filename}.md"
+            output_filename = (
+                f"{sanitized_name}_for_{job_description_filename}.md"
             )
+            output_path = output_dir / output_filename
             self.resume_generator.save_as_markdown(resume_text, output_path)
 
         return output_path
@@ -95,8 +110,10 @@ class ResumeForJobGenerator:
         Args:
             job_description_path: Path to the job description file.
             count: Number of résumés to generate.
-            output_format: Format to output the resumes in ('pdf' or 'markdown').
-            output_dir: Directory to save the resumes in. Defaults to current directory.
+            output_format: Format to output the resumes in ('pdf' or
+                'markdown') format.
+            output_dir: Directory to save the resumes in. Defaults to the
+                current directory.
 
         Returns:
             List of paths to the generated files.
@@ -104,8 +121,12 @@ class ResumeForJobGenerator:
         generated_files: list[Path] = []
 
         for i in range(count):
-            file_path = self.generate(job_description_path, output_format, output_dir)
+            file_path = self.generate(
+                job_description_path,
+                output_format,
+                output_dir,
+            )
             generated_files.append(file_path)
-            print(f"Generated résumé {i+1}/{count} for job: {file_path}")
+            print(f"Generated résumé {i + 1}/{count} for job: {file_path}")
 
         return generated_files

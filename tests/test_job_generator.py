@@ -16,7 +16,10 @@ def test_generate_writes_job_description(tmp_path: Path) -> None:
         "max_salary": 100000,
     }
 
-    generator.llm_client.generate_from_promptdown = lambda *_args, **_kwargs: "job"
+    def _fake_generate(*_args, **_kwargs) -> str:
+        return "job"
+
+    generator.llm_client.generate_from_promptdown = _fake_generate
 
     output_path = generator.generate(output_dir=tmp_path)
 

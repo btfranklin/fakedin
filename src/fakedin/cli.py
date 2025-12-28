@@ -23,7 +23,11 @@ def build_parser() -> argparse.ArgumentParser:
         "resume",
         help="Generate resumes.",
     )
-    resume_parser.add_argument("count", type=int, help="Number of resumes to generate")
+    resume_parser.add_argument(
+        "count",
+        type=int,
+        help="Number of resumes to generate",
+    )
     resume_parser.add_argument(
         "--format",
         "-f",
@@ -99,7 +103,10 @@ def _ensure_output_dir(output_dir: Path) -> None:
 
 def _ensure_job_description_file(path: Path) -> None:
     if not path.exists():
-        print(f"Error: Job description file '{path}' not found.", file=sys.stderr)
+        print(
+            f"Error: Job description file '{path}' not found.",
+            file=sys.stderr,
+        )
         raise SystemExit(1)
 
 
@@ -131,7 +138,10 @@ def _run_job(count: int, output_dir: Path) -> None:
             output_dir=output_dir,
         )
 
-        print(f"\nGenerated {len(generated_files)} job descriptions successfully.")
+        print(
+            f"\nGenerated {len(generated_files)} job descriptions "
+            "successfully."
+        )
         print(f"Files saved to: {output_dir}")
     except Exception as exc:
         print(f"Error: {exc}", file=sys.stderr)
@@ -157,7 +167,8 @@ def _run_resumes_for_job(
         )
 
         print(
-            f"\nGenerated {len(generated_files)} resumes for job: {job_description_file.name}"
+            f"\nGenerated {len(generated_files)} resumes for job: "
+            f"{job_description_file.name}"
         )
         print(f"Files saved to: {output_dir}")
     except Exception as exc:

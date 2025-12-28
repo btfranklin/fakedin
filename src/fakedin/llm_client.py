@@ -37,10 +37,14 @@ class LLMClient:
             prompt_path = settings.get_prompt_path(prompt_file)
 
             # Load the structured prompt from the file
-            structured_prompt = StructuredPrompt.from_promptdown_file(str(prompt_path))
+            structured_prompt = StructuredPrompt.from_promptdown_file(
+                str(prompt_path)
+            )
 
             # Apply template values to the prompt
-            structured_prompt = structured_prompt.apply_template_values(variables)
+            structured_prompt = structured_prompt.apply_template_values(
+                variables
+            )
 
             # Convert to chat completion messages format
             messages = structured_prompt.to_chat_completion_messages()
@@ -48,9 +52,13 @@ class LLMClient:
             # Generate the response using the model
             return self.generate_with_messages(messages)
         except FileNotFoundError:
-            raise FileNotFoundError(f"Prompt file not found: {prompt_file}.prompt.md")
-        except Exception as e:
-            raise RuntimeError(f"Error generating from promptdown: {str(e)}") from e
+            raise FileNotFoundError(
+                f"Prompt file not found: {prompt_file}.prompt.md"
+            )
+        except Exception as exc:
+            raise RuntimeError(
+                f"Error generating from promptdown: {exc}"
+            ) from exc
 
     def generate_with_messages(self, messages: list[dict[str, Any]]) -> str:
         """Generate text using the OpenAI API with formatted messages.
@@ -69,5 +77,5 @@ class LLMClient:
 
             # Extract the generated text from the response
             return response.choices[0].message.content or ""
-        except Exception as e:
-            raise RuntimeError(f"Error generating text: {str(e)}") from e
+        except Exception as exc:
+            raise RuntimeError(f"Error generating text: {exc}") from exc

@@ -5,7 +5,8 @@ import re
 from pathlib import Path
 from typing import Any, Literal, Optional
 
-from fpdf import FPDF  # type: ignore # Package name is fpdf2, but module name is fpdf
+# Package name is fpdf2, but module name is fpdf.
+from fpdf import FPDF  # type: ignore
 
 from fakedin.person_generator import PersonGenerator
 from fakedin.llm_client import LLMClient
@@ -27,8 +28,10 @@ class ResumeGenerator:
         """Generate a single résumé.
 
         Args:
-            output_format: Format to output the resume in ('pdf' or 'markdown').
-            output_dir: Directory to save the resume in. Defaults to current directory.
+            output_format: Format to output the resume in ('pdf' or 'markdown')
+                format.
+            output_dir: Directory to save the resume in. Defaults to the
+                current directory.
 
         Returns:
             Path to the generated file.
@@ -37,7 +40,10 @@ class ResumeGenerator:
         person = self.person_generator.generate_person()
 
         # Generate resume content using LLM
-        resume_text = self.llm_client.generate_from_promptdown("resume", person)
+        resume_text = self.llm_client.generate_from_promptdown(
+            "resume",
+            person,
+        )
 
         # Create output directory if it doesn't exist
         if output_dir is None:
@@ -52,8 +58,8 @@ class ResumeGenerator:
             output_path = output_dir / f"{sanitized_name}_resume.pdf"
             try:
                 self.save_as_pdf(resume_text, output_path, person)
-            except Exception as e:
-                print(f"Error creating PDF: {str(e)}")
+            except Exception as exc:
+                print(f"Error creating PDF: {exc}")
                 # Fallback to markdown
                 markdown_path = output_dir / f"{sanitized_name}_resume.md"
                 self.save_as_markdown(resume_text, markdown_path)
@@ -75,8 +81,10 @@ class ResumeGenerator:
 
         Args:
             count: Number of résumés to generate.
-            output_format: Format to output the resumes in ('pdf' or 'markdown').
-            output_dir: Directory to save the resumes in. Defaults to current directory.
+            output_format: Format to output the resumes in ('pdf' or
+                'markdown') format.
+            output_dir: Directory to save the resumes in. Defaults to the
+                current directory.
 
         Returns:
             List of paths to the generated files.
@@ -86,7 +94,7 @@ class ResumeGenerator:
         for i in range(count):
             file_path = self.generate(output_format, output_dir)
             generated_files.append(file_path)
-            print(f"Generated résumé {i+1}/{count}: {file_path}")
+            print(f"Generated résumé {i + 1}/{count}: {file_path}")
 
         return generated_files
 
@@ -101,7 +109,8 @@ class ResumeGenerator:
     def save_as_pdf(
         self, content: str, output_path: Path, person: dict[str, Any]
     ) -> None:
-        """Save the resume as a PDF file with basic Markdown formatting support.
+        """Save the resume as a PDF file with basic Markdown formatting
+        support.
 
         Supported Markdown:
         - **bold** for bold text
@@ -183,7 +192,7 @@ class ResumeGenerator:
 
         for match in re.finditer(bold_pattern, text):
             # Add the text before the match
-            chunks.append(text[last_end : match.start()])  # type: ignore
+            chunks.append(text[last_end:match.start()])  # type: ignore
 
             # Add the bold text without the markers
             bold_text = match.group(2)
@@ -206,7 +215,7 @@ class ResumeGenerator:
 
         for match in re.finditer(italic_pattern, result):
             # Add the text before the match
-            chunks.append(result[last_end : match.start()])  # type: ignore
+            chunks.append(result[last_end:match.start()])  # type: ignore
 
             # Add the italic text without the markers
             italic_text = match.group(2)
@@ -223,7 +232,9 @@ class ResumeGenerator:
         return result
 
     def sanitize_for_pdf(self, text: str) -> str:
-        """Sanitize text for PDF output by replacing unsupported Unicode characters."""
+        """Sanitize text for PDF output by replacing unsupported Unicode
+        characters.
+        """
         # Common problematic characters and their replacements
         replacements = {
             "\u2013": "-",  # en dash

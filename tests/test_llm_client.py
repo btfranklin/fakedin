@@ -8,7 +8,9 @@ from fakedin.llm_client import LLMClient
 
 class _DummyResponse:
     def __init__(self, content: str) -> None:
-        self.choices = [SimpleNamespace(message=SimpleNamespace(content=content))]
+        self.choices = [
+            SimpleNamespace(message=SimpleNamespace(content=content))
+        ]
 
 
 class _DummyCompletions:
@@ -31,22 +33,36 @@ class _DummyClient:
         self.chat = _DummyChat(content)
 
 
-def test_generate_with_messages_returns_content(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_generate_with_messages_returns_content(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     dummy = _DummyClient("hello")
-    monkeypatch.setattr(llm_module.openai, "OpenAI", lambda api_key: dummy)
+
+    def _fake_openai(*_args, **_kwargs) -> _DummyClient:
+        return dummy
+
+    monkeypatch.setattr(llm_module.openai, "OpenAI", _fake_openai)
     monkeypatch.setattr(llm_module.settings, "openai_api_key", "test-key")
 
     client = LLMClient(model="test-model")
-    result = client.generate_with_messages([
-        {"role": "user", "content": "hi"},
-    ])
+    result = client.generate_with_messages(
+        [
+            {"role": "user", "content": "hi"},
+        ]
+    )
 
     assert result == "hello"
     assert dummy.chat.completions.calls
 
 
-def test_generate_from_promptdown_missing_file(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(llm_module.openai, "OpenAI", lambda api_key: _DummyClient(""))
+def test_generate_from_promptdown_missing_file(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+
+    def _fake_openai(*_args, **_kwargs) -> _DummyClient:
+        return _DummyClient("")
+
+    monkeypatch.setattr(llm_module.openai, "OpenAI", _fake_openai)
     monkeypatch.setattr(llm_module.settings, "openai_api_key", "test-key")
 
     client = LLMClient(model="test-model")

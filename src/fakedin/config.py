@@ -14,21 +14,29 @@ class Settings(BaseModel):
     """Settings for the FakedIn application."""
 
     # OpenAI API configuration
-    openai_api_key: str = Field(default_factory=lambda: os.getenv("OPENAI_API_KEY", ""))
+    openai_api_key: str = Field(
+        default_factory=lambda: os.getenv("OPENAI_API_KEY", "")
+    )
     openai_model: str = Field(
         default_factory=lambda: os.getenv("OPENAI_MODEL", "gpt-5.2")
     )
 
     # Paths
     base_dir: Path = Field(default_factory=lambda: Path(__file__).parent)
-    prompts_dir: Path = Field(default_factory=lambda: Path(__file__).parent / "prompts")
+    prompts_dir: Path = Field(
+        default_factory=lambda: Path(__file__).parent / "prompts"
+    )
     templates_dir: Path = Field(
         default_factory=lambda: Path(__file__).parent / "templates"
     )
-    data_dir: Path = Field(default_factory=lambda: Path(__file__).parent / "data")
+    data_dir: Path = Field(
+        default_factory=lambda: Path(__file__).parent / "data"
+    )
 
     # Generation settings
-    default_output_dir: Path = Field(default_factory=lambda: Path.cwd() / "output")
+    default_output_dir: Path = Field(
+        default_factory=lambda: Path.cwd() / "output"
+    )
 
     def get_prompt_path(self, prompt_name: str) -> Path:
         """Get the path to a prompt file."""
@@ -42,7 +50,9 @@ settings = Settings()
 def validate_settings() -> None:
     """Validate that all required settings are configured."""
     if not settings.openai_api_key:
-        raise ValueError(
-            "OpenAI API key is not set. Please set the OPENAI_API_KEY environment variable "
-            "or create a .env file with OPENAI_API_KEY=your_key"
+        message = (
+            "OpenAI API key is not set. Please set the OPENAI_API_KEY "
+            "environment variable or create a .env file with "
+            "OPENAI_API_KEY=your_key"
         )
+        raise ValueError(message)

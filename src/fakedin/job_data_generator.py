@@ -102,20 +102,43 @@ class JobGenerator:
         """Initialize the job generator."""
         # Initialize Faker for generating job data
         self.faker = Faker("en_US")
-        self.experience_levels = ["Entry-Level", "Mid-Level", "Senior", "Executive"]
+        self.experience_levels = [
+            "Entry-Level",
+            "Mid-Level",
+            "Senior",
+            "Executive",
+        ]
         self.work_models = ["Remote", "Hybrid", "On-Site"]
+
+    def _random_industry_term(self) -> str:
+        industry_terms = list(self.INDUSTRY_TERMS.values())
+        return random.choice(random.choice(industry_terms))
 
     def _generate_company_name(self) -> str:
         """Generate a realistic company name using enhanced patterns."""
         company_patterns = [
             # Two word name + suffix
-            lambda: f"{self.faker.word().capitalize()} {self.faker.word().capitalize()} {self.faker.company_suffix()}",
+            lambda: (
+                f"{self.faker.word().capitalize()} "
+                f"{self.faker.word().capitalize()} "
+                f"{self.faker.company_suffix()}"
+            ),
             # Last name + industry term + suffix
-            lambda: f"{self.faker.last_name()} {random.choice(random.choice(list(self.INDUSTRY_TERMS.values())))} {self.faker.company_suffix()}",
+            lambda: (
+                f"{self.faker.last_name()} {self._random_industry_term()} "
+                f"{self.faker.company_suffix()}"
+            ),
             # Industry term + word + suffix
-            lambda: f"{random.choice(random.choice(list(self.INDUSTRY_TERMS.values())))}{self.faker.word().capitalize()} {self.faker.company_suffix()}",
+            lambda: (
+                f"{self._random_industry_term()}"
+                f"{self.faker.word().capitalize()} "
+                f"{self.faker.company_suffix()}"
+            ),
             # Geographic + industry term
-            lambda: f"{self.faker.city()} {random.choice(random.choice(list(self.INDUSTRY_TERMS.values())))} {self.faker.company_suffix()}",
+            lambda: (
+                f"{self.faker.city()} {self._random_industry_term()} "
+                f"{self.faker.company_suffix()}"
+            ),
             # Standard Faker company
             lambda: self.faker.company(),
         ]

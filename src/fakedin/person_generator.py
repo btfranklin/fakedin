@@ -35,7 +35,8 @@ class PersonGenerator:
         # Generate contact information
         # Create a professional email
         professional_email = (
-            f"{first_name.lower()}.{last_name.lower()}@{self.faker.domain_name()}"
+            f"{first_name.lower()}.{last_name.lower()}@"
+            f"{self.faker.domain_name()}"
         )
         phone_number = self.faker.phone_number()
 

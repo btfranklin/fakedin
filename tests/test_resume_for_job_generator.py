@@ -3,7 +3,9 @@ from pathlib import Path
 from fakedin.resume_for_job_generator import ResumeForJobGenerator
 
 
-def test_generate_wraps_job_description_and_writes_file(tmp_path: Path) -> None:
+def test_generate_wraps_job_description_and_writes_file(
+    tmp_path: Path,
+) -> None:
     job_description_path = tmp_path / "job.md"
     job_description_path.write_text("Job details", encoding="utf-8")
 
