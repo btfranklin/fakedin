@@ -58,7 +58,7 @@ class ResumeGenerator:
                 markdown_path = output_dir / f"{sanitized_name}_resume.md"
                 self.save_as_markdown(resume_text, markdown_path)
                 print(f"Saved as markdown file instead: {markdown_path}")
-                raise
+                output_path = markdown_path
         else:  # markdown
             output_path = output_dir / f"{sanitized_name}_resume.md"
             self.save_as_markdown(resume_text, output_path)
@@ -84,12 +84,9 @@ class ResumeGenerator:
         generated_files: list[Path] = []
 
         for i in range(count):
-            try:
-                file_path = self.generate(output_format, output_dir)
-                generated_files.append(file_path)
-                print(f"Generated résumé {i+1}/{count}: {file_path}")
-            except Exception as e:
-                print(f"Error generating résumé {i+1}: {str(e)}")
+            file_path = self.generate(output_format, output_dir)
+            generated_files.append(file_path)
+            print(f"Generated résumé {i+1}/{count}: {file_path}")
 
         return generated_files
 

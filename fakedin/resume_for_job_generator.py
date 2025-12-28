@@ -104,13 +104,8 @@ class ResumeForJobGenerator:
         generated_files: list[Path] = []
 
         for i in range(count):
-            try:
-                file_path = self.generate(
-                    job_description_path, output_format, output_dir
-                )
-                generated_files.append(file_path)
-                print(f"Generated résumé {i+1}/{count} for job: {file_path}")
-            except Exception as e:
-                print(f"Error generating résumé {i+1} for job: {str(e)}")
+            file_path = self.generate(job_description_path, output_format, output_dir)
+            generated_files.append(file_path)
+            print(f"Generated résumé {i+1}/{count} for job: {file_path}")
 
         return generated_files

@@ -59,12 +59,9 @@ class JobOpeningGenerator:
         generated_files: list[Path] = []
 
         for i in range(count):
-            try:
-                file_path = self.generate(output_dir)
-                generated_files.append(file_path)
-                print(f"Generated job opening {i+1}/{count}: {file_path}")
-            except Exception as e:
-                print(f"Error generating job opening {i+1}: {str(e)}")
+            file_path = self.generate(output_dir)
+            generated_files.append(file_path)
+            print(f"Generated job opening {i+1}/{count}: {file_path}")
 
         return generated_files
 

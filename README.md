@@ -110,7 +110,7 @@ The project leverages the Faker library to generate all random data, including:
 - Career fields and job titles
 - Company names with industry-specific terminology
 
-You can modify the industry-specific terminology for company names in the `JobGenerator.INDUSTRY_TERMS` dictionary in `fakedin/data_generator.py`.
+You can modify the industry-specific terminology for company names in the `JobGenerator.INDUSTRY_TERMS` dictionary in `fakedin/job_data_generator.py`.
 
 ## Prompt Templates
 
@@ -131,3 +131,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - All scripts automatically create output directories if they don't exist
 - Graceful error handling for all generation and file operations
 - Defaults to Markdown format with PDF generation as an option
+- Batch generation stops at the first failure
