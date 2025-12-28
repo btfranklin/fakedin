@@ -31,9 +31,25 @@ classifiers = [
     "Topic :: Office/Business",
 ]
 
+[project.scripts]
+fakedin = "fakedin.cli:main"
+
 [build-system]
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
 
 [tool.pdm]
 distribution = false
+
+[dependency-groups]
+dev = [
+    "flake8>=7.3.0",
+    "pytest>=9.0.2",
+]
+
+[tool.pdm.scripts]
+lint = "flake8 src tests"
+test = "pytest tests"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]

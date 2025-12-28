@@ -3,84 +3,60 @@
 
 FakedIn is a set of Python utilities for generating realistic (but fake) résumés and job opening descriptions. It uses AI to create detailed, professional content that mimics real-world examples.
 
-## Installation
+## Getting Started
 
-### Prerequisites
+You'll need Python 3.12+ and the PDM package manager.
 
-- Python 3.12 or higher
-- PDM package manager
+```bash
+pdm install
+cp .env.example .env
+```
 
-### Setup
-
-1. Clone this repository:
-
-   ```bash
-   git clone https://github.com/yourusername/fakedin.git
-   cd fakedin
-   ```
-
-2. Install dependencies with PDM:
-
-   ```bash
-   pdm install
-   ```
-
-3. Set up your OpenAI API key:
-
-   ```bash
-   echo "OPENAI_API_KEY=your_api_key_here" > .env
-   ```
-
-4. Optionally, specify which OpenAI model to use:
-
-   ```bash
-   # In your .env file
-   OPENAI_MODEL=gpt-5.2
-   ```
+Then set `OPENAI_API_KEY` in `.env`. If you want a specific model, add `OPENAI_MODEL` (defaults to `gpt-5.2`). See the Usage section below for CLI examples.
 
 ## Usage
 
-FakedIn provides simple Python scripts for generating résumés and job openings.
+FakedIn provides a CLI for generating resumes and job openings.
 
-### Generating Résumés
+### Generating Resumes
 
 ```bash
-# Generate 5 résumés in markdown format
-pdm run python generate_resume.py 5
+# Generate 5 resumes in markdown format
+pdm run fakedin resume 5
 
-# Generate 3 résumés in PDF format
-pdm run python generate_resume.py 3 --format pdf
+# Generate 3 resumes in PDF format
+pdm run fakedin resume 3 --format pdf
 
 # Specify an output directory
-pdm run python generate_resume.py 2 --output ./my_resumes --format pdf
+pdm run fakedin resume 2 --output ./my_resumes --format pdf
 ```
 
 ### Generating Job Openings
 
 ```bash
 # Generate 5 job openings
-pdm run python generate_job.py 5
+pdm run fakedin job 5
 
 # Specify an output directory
-pdm run python generate_job.py 3 --output ./job_listings
+pdm run fakedin job 3 --output ./job_listings
 ```
 
-### Generating Résumés Tailored to Jobs
+### Generating Resumes Tailored to Jobs
 
-You can also generate résumés that are specifically tailored to match a particular job description:
+You can also generate resumes that are specifically tailored to match a particular job description:
 
 ```bash
 # First generate a job description
-pdm run python generate_job.py 1 --output ./jobs
+pdm run fakedin job 1 --output ./jobs
 
-# Then generate 5 résumés tailored to that job in markdown format
-pdm run python generate_resumes_for_job.py jobs/company_name_career_field_job.md 5
+# Then generate 5 resumes tailored to that job in markdown format
+pdm run fakedin resumes-for-job jobs/company_name_career_field_job.md 5
 
-# Generate 3 résumés tailored to the job in PDF format
-pdm run python generate_resumes_for_job.py jobs/company_name_career_field_job.md 3 --format pdf
+# Generate 3 resumes tailored to the job in PDF format
+pdm run fakedin resumes-for-job jobs/company_name_career_field_job.md 3 --format pdf
 
 # Specify an output directory
-pdm run python generate_resumes_for_job.py jobs/company_name_career_field_job.md 2 --output ./applicants --format pdf
+pdm run fakedin resumes-for-job jobs/company_name_career_field_job.md 2 --output ./applicants --format pdf
 ```
 
 ## Features
@@ -110,11 +86,11 @@ The project leverages the Faker library to generate all random data, including:
 - Career fields and job titles
 - Company names with industry-specific terminology
 
-You can modify the industry-specific terminology for company names in the `JobGenerator.INDUSTRY_TERMS` dictionary in `fakedin/job_data_generator.py`.
+You can modify the industry-specific terminology for company names in the `JobGenerator.INDUSTRY_TERMS` dictionary in `src/fakedin/job_data_generator.py`.
 
 ## Prompt Templates
 
-FakedIn uses the [promptdown](https://github.com/btfranklin/promptdown) library for structured prompt templates. The templates are located in the `fakedin/prompts` directory:
+FakedIn uses the [promptdown](https://github.com/btfranklin/promptdown) library for structured prompt templates. The templates are located in the `src/fakedin/prompts` directory:
 
 - `resume.prompt.md`: Template for résumé generation
 - `job_opening.prompt.md`: Template for job opening generation
