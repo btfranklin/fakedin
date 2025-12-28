@@ -35,7 +35,7 @@ FakedIn is a set of Python utilities for generating realistic (but fake) r√©sum√
 
    ```bash
    # In your .env file
-   OPENAI_MODEL=gpt-4o-mini  # Defaults to gpt-4o if not specified
+   OPENAI_MODEL=gpt-5.2
    ```
 
 ## Usage

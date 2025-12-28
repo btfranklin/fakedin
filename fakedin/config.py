@@ -16,7 +16,7 @@ class Settings(BaseModel):
     # OpenAI API configuration
     openai_api_key: str = Field(default_factory=lambda: os.getenv("OPENAI_API_KEY", ""))
     openai_model: str = Field(
-        default_factory=lambda: os.getenv("OPENAI_MODEL", "gpt-4o")
+        default_factory=lambda: os.getenv("OPENAI_MODEL", "gpt-5.2")
     )
 
     # Paths
