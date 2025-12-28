@@ -1,5 +1,7 @@
 # FakedIn
+
 ![fakedin social preview](https://raw.githubusercontent.com/btfranklin/fakedin/main/.github/social%20preview/fakedin_social_preview.jpg "FakedIn")
+[![Build Status](https://github.com/btfranklin/fakedin/actions/workflows/python-app.yml/badge.svg)](https://github.com/btfranklin/fakedin/actions/workflows/python-app.yml)
 
 FakedIn is a set of Python utilities for generating realistic (but fake) résumés and job opening descriptions. It uses AI to create detailed, professional content that mimics real-world examples.
 
