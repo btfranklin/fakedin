@@ -40,7 +40,7 @@ class LLMClient:
             structured_prompt = StructuredPrompt.from_promptdown_file(str(prompt_path))
 
             # Apply template values to the prompt
-            structured_prompt.apply_template_values(variables)
+            structured_prompt = structured_prompt.apply_template_values(variables)
 
             # Convert to chat completion messages format
             messages = structured_prompt.to_chat_completion_messages()
