@@ -125,10 +125,3 @@ You can modify these templates to customize the output. The templates follow the
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Technical Features
-
-- All scripts automatically create output directories if they don't exist
-- Graceful error handling for all generation and file operations
-- Defaults to Markdown format with PDF generation as an option
-- Batch generation stops at the first failure
