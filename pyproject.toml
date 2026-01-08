@@ -6,7 +6,7 @@ authors = [
     {name = "B.T. Franklin", email = "brandon.franklin@gmail.com"},
 ]
 dependencies = [
-    "faker>=39.0.0",
+    "faker>=40.1.0",
     "fpdf2>=2.8.5",
     "jinja2>=3.1.6",
     "markdown>=3.10",
@@ -17,7 +17,7 @@ dependencies = [
 ]
 requires-python = ">=3.12"
 readme = "README.md"
-license = {text = "MIT"}
+license = {file = "LICENSE"}
 classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
@@ -31,6 +31,12 @@ classifiers = [
     "Topic :: Office/Business",
 ]
 
+[project.urls]
+Homepage = "https://github.com/btfranklin/fakedin"
+Issues = "https://github.com/btfranklin/fakedin/issues"
+Changelog = "https://github.com/btfranklin/fakedin/releases"
+Repository = "https://github.com/btfranklin/fakedin.git"
+
 [project.scripts]
 fakedin = "fakedin.cli:main"
 
@@ -43,7 +49,7 @@ distribution = false
 
 [dependency-groups]
 dev = [
-    "flake8>=7.3.0",
+    "ruff>=0.14.10",
     "pytest>=9.0.2",
 ]
 
@@ -51,5 +57,8 @@ dev = [
 pythonpath = ["src"]
 
 [tool.pdm.scripts]
-lint = "flake8 src tests"
+lint = "ruff check src tests"
 test = "pytest tests"
+
+[tool.ruff.lint]
+select = ["E", "F", "W"]
